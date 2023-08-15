@@ -24,9 +24,12 @@ ReactDOM.render 의 역할은 브라우저에 있는 실제 DOM 내부에 리액
 
 **주석 - 중괄호로 감싸지 않으면 화면에 보인다.**
 
-### 1-4 props를 통해 컴포넌트에게 값 전달하기
+## 1-4 props를 통해 컴포넌트에게 값 전달하기
 defaultProps 라는 값으로 기본 값을 설정할 수 있다.
 
 내부 내용이 보이기 위해 props.children으로 렌더링 해주어야 한다.
 
  ex. Wrapper.js 로 감싼 Hello 컴포넌트의 렌더링을 위해 children 사용
+
+ ## 1-5 조건부 랜더링
+ props의 값 설정을 생략하면 기본 값으로 true 설정한 것으로 간주

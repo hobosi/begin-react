@@ -18,8 +18,8 @@ function App() {
       /* 이 주석은 화면에 보인다 */
 
       <Wrapper>
-        <Hello name={name} color='red'/>
-        <Hello color='blue'/>
+        <Hello name={name} color='red' isSpecial/>
+        <Hello color='pink'/>
       </Wrapper>
       <div style={style}>{name}</div>
       <div className='gray-box'></div>
