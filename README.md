@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# 벨로퍼트와 함께하는 모던 리액트
+(https://react.vlpt.us)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1-1 리액트는 어쩌다가 만들어 졌을까?
+리액트는 어떠한 상태가 바뀌었을때, 그 상태에 따라 DOM을 어떻게 업데이트 할 지 규칙을 정하는 것이 아니라 아예 다 날리고 처음부터 모든걸 만들어서 보여준다면 어떨까? 라는 아이디어에서 개발이 시작되었다.
 
-## Available Scripts
+속도 문제를 해결하기 위해 리액트에서는 Virtual DOM 이라는 것을 사용해서 가능케 했다.
 
-In the project directory, you can run:
+## 1-2 나의 첫번째 리액트 컴포넌트
+ReactDOM.render 의 역할은 브라우저에 있는 실제 DOM 내부에 리액트 컴포넌트를 렌더링 하겠다는 것을 의미
 
-### `npm start`
+## 1-3 JSX
+리액트 컴포넌트 파일에서 XML 형태로 코드를 작성하면 babel이 JSX를 JavaScript로 변환 해준다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 규칙 - App.js
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**꼭 닫혀야 하는 태그**
 
-### `npm test`
+**꼭 감싸져야 하는 태그 - 두 개 이상의 태그는 감싸져야 한다.**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**JSX 안에 자바스크립트 값 사용하기**
 
-### `npm run build`
+**style과 className**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**주석 - 중괄호로 감싸지 않으면 화면에 보인다.**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1-4 props를 통해 컴포넌트에게 값 전달하기
+defaultProps 라는 값으로 기본 값을 설정할 수 있다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+내부 내용이 보이기 위해 props.children으로 렌더링 해주어야 한다.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ ex. Wrapper.js 로 감싼 Hello 컴포넌트의 렌더링을 위해 children 사용
