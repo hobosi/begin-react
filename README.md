@@ -29,10 +29,10 @@ defaultProps 라는 값으로 기본 값을 설정할 수 있다.
 
 내부 내용이 보이기 위해 props.children으로 렌더링 해주어야 한다.
 
- ex. Wrapper.js 로 감싼 Hello 컴포넌트의 렌더링을 위해 children 사용
+  ex. Wrapper.js 로 감싼 Hello 컴포넌트의 렌더링을 위해 children 사용
 
- ## 1-5 조건부 랜더링
- props의 값 설정을 생략하면 기본 값으로 true 설정한 것으로 간주
+## 1-5 조건부 랜더링
+props의 값 설정을 생략하면 기본 값으로 true 설정한 것으로 간주
 
 ## 1-6 useState를 통해 컴포넌트에서 바뀌는 값 관리하기
 useState를 사용 할 때에는 상태의 기본값을 파라미터로 넣어서 호출, 이 함수를 호출해주면 배열이 반환된다.
@@ -40,3 +40,14 @@ useState를 사용 할 때에는 상태의 기본값을 파라미터로 넣어�
 여기서 첫번째 원소는 현재 상태, 두번째 원소는 Setter 함수이다.
 
 함수형 업데이트: 주로 컴포넌트를 최적화 할 때 사용
+
+## 1-7 input 상태 관리하기
+**onChange 이벤트**
+
+input의 onChange를 사용하면 이벤트 객체(e)를 받아올 수 있다.
+
+이 객체의 e.target은 이벤트가 발생한 DOM을 가리킨다.
+
+e.target.value를 조회하면 현재 input의 value 값을 알 수 있다.
+
+여러 input의 경우 useState, onChange를 여러개 만들어 구현할 수 있으나 input의 name을 설정하여 useState를 객체 형태로 상태관리 해주는 것이 좋다.
