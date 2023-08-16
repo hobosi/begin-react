@@ -51,3 +51,7 @@ input의 onChange를 사용하면 이벤트 객체(e)를 받아올 수 있다.
 e.target.value를 조회하면 현재 input의 value 값을 알 수 있다.
 
 여러 input의 경우 useState, onChange를 여러개 만들어 구현할 수 있으나 input의 name을 설정하여 useState를 객체 형태로 상태관리 해주는 것이 좋다.
+
+## 1-8 useRef로 특정 DOM 선택하기
+useRef라는 Hook 함수를 이용하여 특정 DOM을 선택
+
