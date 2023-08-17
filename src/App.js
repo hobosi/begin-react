@@ -3,14 +3,14 @@ import UserList from './UserList';
 import CreateUser from './CreateUser';
 import './App.css';
 
-// TODO: 수정 버튼을 만들어서 이름과 이메일을 변경하는 기능을 추가해보자
 function App() {
   const [inputs, setInputs] = useState({
     username: '',
-    email: ''
+    email: '',
+    id: ''
   })
 
-  const {username, email} = inputs;
+  const {username, email, id} = inputs;
 
   const onChange = e => {
     const {name, value} = e.target;
@@ -56,10 +56,30 @@ function App() {
 
     setInputs({
       username: '',
-      email: ''
+      email: '',
+      id: ''
     })
     nextId.current += 1;
   };
+
+  const onModify = user => {
+    setInputs({
+      username: user.username,
+      email: user.email,
+      id: user.id
+    });
+  }
+
+  const onUpdate = () => {
+    setUsers(users.map( user => user.id === id ? {...user, username: username, email: email} : user));
+
+    setInputs({
+      username: '',
+      email: '',
+      id: ''
+    })
+    
+  }
 
   const onRemove = id => {
     setUsers(users.filter(user => user.id !== id));
@@ -74,8 +94,8 @@ function App() {
 
   return (
     <>
-      <CreateUser userName={username} email={email} onChange={onChange} onCreate={onCreate}/>
-      <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+      <CreateUser userName={username} email={email} onChange={onChange} onUpdate={onUpdate} onCreate={onCreate}/>
+      <UserList users={users} onRemove={onRemove} onModify={onModify} onToggle={onToggle}/>
     </>
   )
 }

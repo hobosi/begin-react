@@ -6,7 +6,7 @@ import React from 'react';
  * onClick={ onRemove(user.id) } 과 같이 작성하면 렌더링과 동시에 삭제되기 때문에
  * onClick={ () => onRemove(user.id) } 와 같이 콜백함수로 처리하여 렌더링과 동시에 삭제되는 것을 방지한다.
  */
-function User({user, onRemove, onToggle}) {
+function User({user, onRemove, onModify, onToggle}) {
   return (
     <div>
       
@@ -16,15 +16,16 @@ function User({user, onRemove, onToggle}) {
       }} onClick={() => onToggle(user.id)}> {user.username}</b> 
       <span>({user.email})</span>
       <button onClick={() => onRemove(user.id)}>삭제</button>
+      <button onClick={() => onModify(user)}>수정</button>
     </div>
   )
 }
 
-function UserList({users, onRemove, onToggle}) {
+function UserList({users, onRemove, onModify, onToggle}) {
   return (
     <div>
       {users.map((user, index) => (
-        <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle}/>
+        <User user={user} key={user.id} onRemove={onRemove} onModify={onModify} onToggle={onToggle}/>
         // <User user={user} key={index} />
       ))}
     </div>
