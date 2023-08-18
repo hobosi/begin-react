@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# 벨로퍼트와 함께하는 모던 리액트
+(https://react.vlpt.us)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1-1 리액트는 어쩌다가 만들어 졌을까?
+리액트는 어떠한 상태가 바뀌었을때, 그 상태에 따라 DOM을 어떻게 업데이트 할 지 규칙을 정하는 것이 아니라 아예 다 날리고 처음부터 모든걸 만들어서 보여준다면 어떨까? 라는 아이디어에서 개발이 시작되었다.
 
-## Available Scripts
+속도 문제를 해결하기 위해 리액트에서는 Virtual DOM 이라는 것을 사용해서 가능케 했다.
 
-In the project directory, you can run:
+## 1-2 나의 첫번째 리액트 컴포넌트
+ReactDOM.render 의 역할은 브라우저에 있는 실제 DOM 내부에 리액트 컴포넌트를 렌더링 하겠다는 것을 의미
 
-### `npm start`
+## 1-3 JSX
+리액트 컴포넌트 파일에서 XML 형태로 코드를 작성하면 babel이 JSX를 JavaScript로 변환 해준다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 규칙 - App.js
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**꼭 닫혀야 하는 태그**
 
-### `npm test`
+**꼭 감싸져야 하는 태그 - 두 개 이상의 태그는 감싸져야 한다.**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**JSX 안에 자바스크립트 값 사용하기**
 
-### `npm run build`
+**style과 className**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**주석 - 중괄호로 감싸지 않으면 화면에 보인다.**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 1-4 props를 통해 컴포넌트에게 값 전달하기
+defaultProps 라는 값으로 기본 값을 설정할 수 있다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+내부 내용이 보이기 위해 props.children으로 렌더링 해주어야 한다.
 
-### `npm run eject`
+  ex. Wrapper.js 로 감싼 Hello 컴포넌트의 렌더링을 위해 children 사용
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 1-5 조건부 랜더링
+props의 값 설정을 생략하면 기본 값으로 true 설정한 것으로 간주
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 1-6 useState를 통해 컴포넌트에서 바뀌는 값 관리하기
+useState를 사용 할 때에는 상태의 기본값을 파라미터로 넣어서 호출, 이 함수를 호출해주면 배열이 반환된다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+여기서 첫번째 원소는 현재 상태, 두번째 원소는 Setter 함수이다.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+함수형 업데이트: 주로 컴포넌트를 최적화 할 때 사용
 
-## Learn More
+## 1-7 input 상태 관리하기
+**onChange 이벤트**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+input의 onChange를 사용하면 이벤트 객체(e)를 받아올 수 있다.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+이 객체의 e.target은 이벤트가 발생한 DOM을 가리킨다.
 
-### Code Splitting
+e.target.value를 조회하면 현재 input의 value 값을 알 수 있다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+여러 input의 경우 useState, onChange를 여러개 만들어 구현할 수 있으나 input의 name을 설정하여 useState를 객체 형태로 상태관리 해주는 것이 좋다.
 
-### Analyzing the Bundle Size
+## 1-8 useRef로 특정 DOM 선택하기
+useRef라는 Hook 함수를 이용하여 특정 DOM을 선택
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+위의 기능외에도 컴포넌트 안에서 조회 및 수정할 수 있는 변수 관리를 할 수 있다.
 
-### Making a Progressive Web App
+useRef로 관리되는 변수는 값이 바뀌어도 컴포넌트가 리렌더링되지 않는다.
+* useRef는 일반적인 자바스크립트 객체이다. 즉, heap 영역에 저장되어 어플리케이션이 종료되거나 가비지 컬렉팅이 될 때 까지 참조되는 메모리 주소가 동일하다.
+* 컴포넌트는 그 컴포넌트의 state나 props가 변경될 때마다 호출되는데, 함수형 컴포넌트는 일반 자바스크립트 함수와 마찬가지로 호출될 때마다 함수 내부에 정의돈 로컬 변수들을 초기화한다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 1-9 배열
+###  렌더링하기
+동적인 배열을 렌더링해야 할 때에는 자바스크립트 배열의 내장함수 map()을 사용
 
-### Advanced Configuration
+리액트에서 배열을 렌더링 할 때에는 key 라는 props를 설정 해야한다. 고유한 값을 가진 원소가 없다면 콜백함수의 두번째 파라미터 index를 key로 사용한다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**key값을 설정해줘야 하는 이유**
 
-### Deployment
+배열의 값이 변경될 때 효율적으로 값을 업데이트 하기 위해서이다.
+(key의 값으로 업데이트 변경 대상을 찾아 업데이트)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 배열 추가하기
+배열에 변화를 줄 때에는 객체와 마찬가지로 불변성을 지켜주어야 한다.
 
-### `npm run build` fails to minify
+**불변성을 지키면서 배열에 새항목을 추가하는 방법**
+* spread 연산자 사용 - 펼치다
+  (https://learnjs.vlpt.us/useful/07-spread-and-rest.html#spread)
+* concat 함수 사용
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 배열 삭제하기
+### 배열 항목 수정하기
