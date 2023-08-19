@@ -31,7 +31,7 @@ defaultProps 라는 값으로 기본 값을 설정할 수 있다.
 
   ex. Wrapper.js 로 감싼 Hello 컴포넌트의 렌더링을 위해 children 사용
 
-## 1-5 조건부 랜더링
+## 1-5 조건부 렌더링
 props의 값 설정을 생략하면 기본 값으로 true 설정한 것으로 간주
 
 ## 1-6 useState를 통해 컴포넌트에서 바뀌는 값 관리하기
@@ -80,5 +80,28 @@ useRef로 관리되는 변수는 값이 바뀌어도 컴포넌트가 리렌더�
   (https://learnjs.vlpt.us/useful/07-spread-and-rest.html#spread)
 * concat 함수 사용
 
-### 배열 삭제하기
-### 배열 항목 수정하기
+## useEffect를 사용하여 마운트/언마운트/업데이트시 할 작업 설정하기
+useEffect라는 Hook을 사용하여 컴포넌트가 마운트(처음나타날때), 언마운트(사라질때), 그리고 업데이트(특정 props가 바뀔때) 특정 작업을 처리하는 방법
+* 마운트 - life cycle 중 componentDidmount 처럼 실행
+* 언마운트 - life cycle 중 componentWillUnmount 처럼 실행
+* 업데이트 (deps에 넣은 파라미터 값이 업데이트 됐을 때) - life cycle 중 componentDidUpdate 처럼 실행 
+    * deps 파라미터를 생략하면, 컴포넌트가 리렌더링 될 때마다 호출된다.
+  
+  리액트 컴포넌트는 기본적으로 부모컴포넌트가 리렌더링되면 자식 컴포넌트 또한 렌더링 된다. 실제 DOM에는 변경된 내용만 반영(Virtual DOM은 모든걸 렌더링한다.)
+---
+useEffect가 두번 실행되서 검색해 봤더니 index.js의 <React.StrictMode> 때문이라고 한다. (StrictMode는 아래에 설명)
+
+
+
+## StrictMode
+  * StrictMode는 잠재적인 문제를 알아내기 위한 도구이다.
+  (개발 모드에서만 활성화되기 때문에, 프로덕션 빌드에서는 영향을 끼치지 않는다.)
+  * StrictMode는 아래와 같은 부분에서 도움이 됩니다.
+    * 안전하지 않은 생명주기를 사용하는 컴포넌트 발견
+    * 레거시 문자열 ref 사용에 대한 경고
+    * 권장되지 않는 findDOMNode 사용에 대한 경고
+    * 예상치 못한 부작용 검사
+    * 레거시 context API 검사
+    * Ensuring reusable state
+
+
