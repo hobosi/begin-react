@@ -1,9 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
 import './App.css';
 
-// TODO: 수정 버튼을 만들어서 이름과 이메일을 변경하는 기능을 추가해보자
+function countActiveUsers(users) {
+  console.log('활성 사용자 수를 세는 중...')
+  return users.filter(user => user.active).length;
+}
+
 function App() {
   const [inputs, setInputs] = useState({
     username: '',
@@ -72,10 +76,14 @@ function App() {
     )
   }
 
+  // useMemo()를 사용하여 바뀌는 대상을 특정하여 원하는 연산을 실행한다.
+  const count = useMemo(() => countActiveUsers(users), [users]);
+
   return (
     <>
       <CreateUser userName={username} email={email} onChange={onChange} onCreate={onCreate}/>
       <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+      <div>활성사용자 수 : {count}</div>
     </>
   )
 }
