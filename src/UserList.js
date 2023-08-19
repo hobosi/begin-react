@@ -6,7 +6,7 @@ import React, {useEffect} from 'react';
  * onClick={ onRemove(user.id) } 과 같이 작성하면 렌더링과 동시에 삭제되기 때문에
  * onClick={ () => onRemove(user.id) } 와 같이 콜백함수로 처리하여 렌더링과 동시에 삭제되는 것을 방지한다.
  */
-function User({user, onRemove, onToggle}) {
+const User = React.memo(function User({user, onRemove, onToggle}) {
   useEffect(() => {
     console.log('user 값이 설정됨');
     // console.log(user);
@@ -24,8 +24,8 @@ function User({user, onRemove, onToggle}) {
       <span>({user.email})</span>
       <button onClick={() => onRemove(user.id)}>삭제</button>
     </div>
-  )
-}
+  );
+});
 
 function UserList({users, onRemove, onToggle}) {
   return (
