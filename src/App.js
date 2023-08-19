@@ -20,11 +20,11 @@ function App() {
     e => {
       const {name, value} = e.target;
 
-      setInputs({
+      setInputs(inputs => ({
         ...inputs,
         [name]: value
-      });
-  }, [inputs]);
+      }));
+  }, []);
 
   const [users, setUsers] = useState([
     {
@@ -58,27 +58,27 @@ function App() {
       }
 
       // setUsers([...users, user]); // spread 연산자
-      setUsers(users.concat(user));
+      setUsers(users => users.concat(user));
 
       setInputs({
         username: '',
         email: ''
       })
       nextId.current += 1;
-    }, [users, username, email]);
+    }, [username, email]);
 
   const onRemove = useCallback(
     id => {
-      setUsers(users.filter(user => user.id !== id));
-    }, [users]);
+      setUsers(users => users.filter(user => user.id !== id));
+    }, []);
 
   const onToggle = useCallback(
       id => {
       setUsers(
-        users.map(user =>
-          user.id === id ? {...user, active: !user.active}: user)
+        users =>
+          users.map(user => user.id === id ? {...user, active: !user.active}: user)
       )
-    }, [users]);
+    }, []);
 
   // useMemo()를 사용하여 바뀌는 대상을 특정하여 원하는 연산을 실행한다.
   const count = useMemo(() => countActiveUsers(users), [users]);

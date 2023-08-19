@@ -37,4 +37,10 @@ function UserList({users, onRemove, onToggle}) {
   )
 }
 
-export default React.memo(UserList);
+export default React.memo(UserList,
+    // TODO: 아래의 코드는 좀 더 공부해봐야겠다.
+    /** 이걸 잘못사용한다면 오히려 의도치 않은 버그들이 발생하기 쉽습니다. 예를 들어서,
+     * 함수형 업데이트로 전환을 안했는데 이렇게 users 만 비교를 하게 된다면,
+     * onToggle 과 onRemove 에서 최신 users 배열을 참조하지 않으므로 심각한 오류가 발생 할 수 있습니다. */
+    (prevProps, nextProps) => prevProps.users === nextProps.users
+  );
