@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useCallback } from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
 import './App.css';
@@ -16,14 +16,15 @@ function App() {
 
   const {username, email} = inputs;
 
-  const onChange = e => {
-    const {name, value} = e.target;
+  const onChange = useCallback (
+    e => {
+      const {name, value} = e.target;
 
-    setInputs({
-      ...inputs,
-      [name]: value
-    });
-  };
+      setInputs({
+        ...inputs,
+        [name]: value
+      });
+  }, [inputs]);
 
   const [users, setUsers] = useState([
     {
@@ -48,33 +49,36 @@ function App() {
 
   const nextId = useRef(4);
   
-  const onCreate = () => {
-    const user = {
-      id: nextId.current,
-      username,
-      email
-    }
+  const onCreate = useCallback (
+    () => {
+      const user = {
+        id: nextId.current,
+        username,
+        email
+      }
 
-    // setUsers([...users, user]); // spread 연산자
-    setUsers(users.concat(user));
+      // setUsers([...users, user]); // spread 연산자
+      setUsers(users.concat(user));
 
-    setInputs({
-      username: '',
-      email: ''
-    })
-    nextId.current += 1;
-  };
+      setInputs({
+        username: '',
+        email: ''
+      })
+      nextId.current += 1;
+    }, [users, username, email]);
 
-  const onRemove = id => {
-    setUsers(users.filter(user => user.id !== id));
-  };
+  const onRemove = useCallback(
+    id => {
+      setUsers(users.filter(user => user.id !== id));
+    }, [users]);
 
-  const onToggle = id => {
-    setUsers(
-      users.map(user =>
-        user.id === id ? {...user, active: !user.active}: user)
-    )
-  }
+  const onToggle = useCallback(
+      id => {
+      setUsers(
+        users.map(user =>
+          user.id === id ? {...user, active: !user.active}: user)
+      )
+    }, [users]);
 
   // useMemo()를 사용하여 바뀌는 대상을 특정하여 원하는 연산을 실행한다.
   const count = useMemo(() => countActiveUsers(users), [users]);
