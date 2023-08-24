@@ -1,27 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo, useCallback, useReducer } from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
-import './App.css';
+import useInputs from './hook/useInput';
 
-// TODO: 수정 버튼을 만들어서 이름과 이메일을 변경하는 기능을 추가해보자
-function App() {
-  const [inputs, setInputs] = useState({
+// TODO: useInputs 커스텀 Hook 을 한번 useReducer 를 사용해서 구현해보세요
+function countActiveUsers(users) {
+  console.log('활성 사용자 수를 세는 중...')
+  return users.filter(user => user.active).length;
+}
+
+const initialState = {
+  inputs: {
     username: '',
     email: ''
-  })
-
-  const {username, email} = inputs;
-
-  const onChange = e => {
-    const {name, value} = e.target;
-
-    setInputs({
-      ...inputs,
-      [name]: value
-    });
-  };
-
-  const [users, setUsers] = useState([
+  },
+  users: [
     {
       id: 1,
       username: 'velopert',
@@ -40,42 +33,86 @@ function App() {
       email: 'liz@example.com',
       active: false
     }
-  ]);
+]};
+
+function reducer(state, action) {
+  switch(action.type) {
+    case 'CHANGE_INPUT':
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [action.name]: action.value
+        }
+      };
+    case 'CREATE_USER':
+      return {
+        inputs: initialState.inputs,
+        users: state.users.concat(action.user)
+      };
+    case 'TOGGLE_USER':
+      return {
+        ...state,
+        users: state.users.map(user => user.id === action.id ? {...user, active: !user.active}: user)
+      };
+    case 'REMOVE_USER':
+      return {
+        ...state,
+        users: state.users.filter(user => user.id !== action.id)
+      };
+    default:
+      return state;
+  }
+}
+
+function App() {
+  const [{username, email}, onChange, reset] = useInputs({
+    username: '',
+    email: ''
+  });
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const nextId = useRef(4);
-  
-  const onCreate = () => {
-    const user = {
-      id: nextId.current,
-      username,
-      email
-    }
+  const { users } = state;
 
-    // setUsers([...users, user]); // spread 연산자
-    setUsers(users.concat(user));
+  const onCreate = useCallback(() => {
+    dispatch({
+      type: 'CREATE_USER',
+      user: {
+        id: nextId.current,
+        username,
+        email
+      }
+    });
+    reset();
+    nextId.current++;
+  }, [username, email, reset]);
 
-    setInputs({
-      username: '',
-      email: ''
-    })
-    nextId.current += 1;
-  };
+  const onRemove = useCallback(
+    id => {
+    dispatch({
+      type: 'REMOVE_USER',
+      id
+    });
+  }, []);
 
-  const onRemove = id => {
-    setUsers(users.filter(user => user.id !== id));
-  };
+  const onToggle = useCallback(
+    id => {
+      dispatch({
+        type: 'TOGGLE_USER',
+        id
+      });
+    
+  }, []);
 
-  const onToggle = id => {
-    setUsers(
-      users.map(user =>
-        user.id === id ? {...user, active: !user.active}: user)
-    )
-  }
+  const count = useMemo(() => countActiveUsers(users), [users]);
 
   return (
     <>
-      <CreateUser userName={username} email={email} onChange={onChange} onCreate={onCreate}/>
-      <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+      <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate}/>
+      <UserList users={users} onToggle={onToggle} onRemove={onRemove}/>
+      <div>활성사용자 수 : {count}</div>
     </>
   )
 }
