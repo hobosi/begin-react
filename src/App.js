@@ -1,9 +1,9 @@
 import React, { useState, useRef, useMemo, useCallback, useReducer } from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
-import './App.css';
-import { act } from 'react-dom/test-utils';
+import useInputs from './hook/useInput';
 
+// TODO: useInputs 커스텀 Hook 을 한번 useReducer 를 사용해서 구현해보세요
 function countActiveUsers(users) {
   console.log('활성 사용자 수를 세는 중...')
   return users.filter(user => user.active).length;
@@ -66,20 +66,15 @@ function reducer(state, action) {
 }
 
 function App() {
+  const [{username, email}, onChange, reset] = useInputs({
+    username: '',
+    email: ''
+  });
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const nextId = useRef(4);
   const { users } = state;
-  const { username, email } = state.inputs;
-
-  const onChange = useCallback(e => {
-    const { name, value } = e.target;
-    dispatch({
-      type: 'CHANGE_INPUT',
-      name,
-      value
-    });
-  }, []);
 
   const onCreate = useCallback(() => {
     dispatch({
@@ -90,8 +85,9 @@ function App() {
         email
       }
     });
+    reset();
     nextId.current++;
-  }, [username, email]);
+  }, [username, email, reset]);
 
   const onRemove = useCallback(
     id => {
