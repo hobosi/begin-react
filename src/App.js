@@ -3,6 +3,7 @@ import UserList from './UserList';
 import CreateUser from './CreateUser';
 import useInputs from './hook/useInput';
 
+// TODO: onCreate를 dispatch를 사용하여 구현
 function countActiveUsers(users) {
   console.log('활성 사용자 수를 세는 중...')
   return users.filter(user => user.active).length;
@@ -38,7 +39,7 @@ function reducer(state, action) {
       };
     case 'TOGGLE_USER':
       return {
-        users: state.users.map(user => user.id === action.id ? {...user, active: !user.active}: user)
+        users: state.users.map(user => user.id === action.id ? {...user, active: !user.active} : user)
       };
     case 'REMOVE_USER':
       return {
@@ -48,6 +49,8 @@ function reducer(state, action) {
       return state;
   }
 }
+
+export const UserDispatch = React.createContext(null);
 
 function App() {
   const [{ username, email }, onChange, reset] = useInputs({
@@ -73,31 +76,14 @@ function App() {
     nextId.current += 1;
   }, [username, email, reset]);
 
-  const onRemove = useCallback(
-    id => {
-    dispatch({
-      type: 'REMOVE_USER',
-      id
-    });
-  }, []);
-
-  const onToggle = useCallback(
-    id => {
-      dispatch({
-        type: 'TOGGLE_USER',
-        id
-      });
-    
-  }, []);
-
   const count = useMemo(() => countActiveUsers(users), [users]);
 
   return (
-    <>
+    <UserDispatch.Provider value={dispatch}>
       <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate}/>
-      <UserList users={users} onToggle={onToggle} onRemove={onRemove}/>
+      <UserList users={users} />
       <div>활성사용자 수 : {count}</div>
-    </>
+    </UserDispatch.Provider>
   );
 }
 

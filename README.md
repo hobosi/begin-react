@@ -112,6 +112,13 @@ React.memo는 컴포넌트의 props가 바뀌지 않았다면 리렌더링을 �
 * state는 useReducer를 통해 저장된 변수다.
 * 주로 initialState라는 객체에 초기 정보를 담고 useReducer 에게 전달한다.
 
+## Context API
+프로젝트 안에서 전역적으로 사용할 수 있는 '값'을 관리할 수 있다.
+(값은 상태, 함수, 외부 라이브러리 인스턴스, DOM 일 수 있다.)
+
+useState와 useReducer의 가장 큰 차이점은 useReducer는 dispatch를 ContextAPI를 사용하여 전역적으로 하용할 수 있다는 것이다.
+
+
 ## StrictMode
   * StrictMode는 잠재적인 문제를 알아내기 위한 도구이다.
   (개발 모드에서만 활성화되기 때문에, 프로덕션 빌드에서는 영향을 끼치지 않는다.)
