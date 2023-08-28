@@ -3,7 +3,6 @@ import UserList from './UserList';
 import CreateUser from './CreateUser';
 import useInputs from './hook/useInput';
 
-// TODO: onCreate를 dispatch를 사용하여 구현
 function countActiveUsers(users) {
   console.log('활성 사용자 수를 세는 중...')
   return users.filter(user => user.active).length;
@@ -53,34 +52,15 @@ function reducer(state, action) {
 export const UserDispatch = React.createContext(null);
 
 function App() {
-  const [{ username, email }, onChange, reset] = useInputs({
-    username: '',
-    email: ''
-  });
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const nextId = useRef(4);
   const { users } = state;
-
-  const onCreate = useCallback(() => {
-    dispatch({
-      type: 'CREATE_USER',
-      user: {
-        id: nextId.current,
-        username,
-        email
-      }
-    });
-    reset();
-    nextId.current += 1;
-  }, [username, email, reset]);
 
   const count = useMemo(() => countActiveUsers(users), [users]);
 
   return (
     <UserDispatch.Provider value={dispatch}>
-      <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate}/>
+      <CreateUser />
       <UserList users={users} />
       <div>활성사용자 수 : {count}</div>
     </UserDispatch.Provider>
