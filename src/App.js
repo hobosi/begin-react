@@ -1,19 +1,14 @@
-import React, { useState, useRef, useMemo, useCallback, useReducer } from 'react';
+import React, { useRef, useReducer, useMemo, useCallback } from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
 import useInputs from './hook/useInput';
 
-// TODO: useInputs 커스텀 Hook 을 한번 useReducer 를 사용해서 구현해보세요
 function countActiveUsers(users) {
   console.log('활성 사용자 수를 세는 중...')
   return users.filter(user => user.active).length;
 }
 
 const initialState = {
-  inputs: {
-    username: '',
-    email: ''
-  },
   users: [
     {
       id: 1,
@@ -33,31 +28,20 @@ const initialState = {
       email: 'liz@example.com',
       active: false
     }
-]};
+  ]};
 
 function reducer(state, action) {
-  switch(action.type) {
-    case 'CHANGE_INPUT':
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.name]: action.value
-        }
-      };
+  switch (action.type) {
     case 'CREATE_USER':
       return {
-        inputs: initialState.inputs,
         users: state.users.concat(action.user)
       };
     case 'TOGGLE_USER':
       return {
-        ...state,
         users: state.users.map(user => user.id === action.id ? {...user, active: !user.active}: user)
       };
     case 'REMOVE_USER':
       return {
-        ...state,
         users: state.users.filter(user => user.id !== action.id)
       };
     default:
@@ -66,7 +50,7 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{username, email}, onChange, reset] = useInputs({
+  const [{ username, email }, onChange, reset] = useInputs({
     username: '',
     email: ''
   });
@@ -86,7 +70,7 @@ function App() {
       }
     });
     reset();
-    nextId.current++;
+    nextId.current += 1;
   }, [username, email, reset]);
 
   const onRemove = useCallback(
@@ -114,7 +98,7 @@ function App() {
       <UserList users={users} onToggle={onToggle} onRemove={onRemove}/>
       <div>활성사용자 수 : {count}</div>
     </>
-  )
+  );
 }
 
 export default App;
