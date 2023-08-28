@@ -9,7 +9,7 @@ function InputSample() {
     nickName: ''
   });
 
-  const {userName, nickName} = inputs;
+  const { userName, nickName } = inputs;
 
   const onReset = () => {
     setInputs({
@@ -20,7 +20,7 @@ function InputSample() {
   }
 
   const onChange = (e) => {
-    const {value, name} = e.target;
+    const { value, name } = e.target;
     setInputs({
       ...inputs,
       [name]: value
@@ -29,8 +29,8 @@ function InputSample() {
 
   return (
     <div>
-      <input name='userName' placeholder='이름' onChange={onChange} value={userName} ref={userNameInput}/>
-      <input name='nickName' placeholder='닉네임' onChange={onChange} value={nickName}/>
+      <input name='userName' placeholder='이름' onChange={onChange} value={userName} ref={userNameInput} />
+      <input name='nickName' placeholder='닉네임' onChange={onChange} value={nickName} />
       <button onClick={onReset}>초기화</button>
       <div>
         <b>값: </b>

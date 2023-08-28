@@ -17,13 +17,13 @@ class Counter extends Component {
       }
     );
   };
-  
+
   handleDecrease = () => {
     this.setState(state => ({
       counter: this.state.counter - 1
     }));
   };
-  
+
   render() {
     return (
       <div>

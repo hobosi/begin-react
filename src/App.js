@@ -28,7 +28,8 @@ const initialState = {
       email: 'liz@example.com',
       active: false
     }
-  ]};
+  ]
+};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -38,12 +39,12 @@ function reducer(state, action) {
       });
     case 'TOGGLE_USER':
       return produce(state, draft => {
-        const user = draft.users.find( user => user.id === action.id ); 
+        const user = draft.users.find(user => user.id === action.id);
         user.active = !user.action;
       });
     case 'REMOVE_USER':
       return produce(state, draft => {
-        const index = draft.users.findIndex( user => user.id === action.id ); 
+        const index = draft.users.findIndex(user => user.id === action.id);
         draft.users.splice(index, 1);
       });
     default:
